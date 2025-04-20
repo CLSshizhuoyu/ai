@@ -116,8 +116,6 @@ def main(head_question):
                 "top_p" : 0.7,
                 "temperature" : 0.95,
                 "max_tokens" : 1024,
-                "tools" : [{"type": "web_search",
-                            "web_search": {"search_result": True}}],
                 "stream" : True
             }
 
