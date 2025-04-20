@@ -1,3 +1,4 @@
+import os
 import json
 import time
 import requests
@@ -51,6 +52,33 @@ def save_to_file(file, content, is_question=False):
     else:
         file.write(content)
 
+
+def create_unique_py_file(content, geshi):
+    # 生成唯一文件名
+    timestamp = datetime.now().timestamp()
+    filename = f"program_{int(timestamp)}.{geshi}"
+    
+    # 自动处理编码问题
+    try:
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"py文件已自动创建：{os.path.abspath(filename)}")
+    except UnicodeEncodeError as e:
+        print(f"编码错误：{e}")
+        # 自动尝试其他编码格式
+        for encoding in ['utf-8', 'gbk', 'gb18030']:
+            try:
+                with open(filename, 'w', encoding=encoding) as f:
+                    f.write(content)
+                print(f"已用{encoding}编码成功创建：{os.path.abspath(filename)}")
+                break
+            except UnicodeEncodeError:
+                pass
+    except Exception as e:
+        print(f"错误：{e}")
+
+
+
 def main(head_question):
     # 配置
     url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
@@ -62,6 +90,9 @@ def main(head_question):
     # 打开文件用于保存对话
     with open("deepseek对话记录.txt", "a", encoding="utf-8") as file:
         times = 0
+        program = ''
+        gs = ''
+        p_mode = False
         while True:
             # 获取用户输入
             times += 1
@@ -132,13 +163,27 @@ def main(head_question):
                         if line.startswith('data: '):
                             if line == 'data: [DONE]':
                                 continue
-
                             try:
                                 content = json.loads(
                                     line[6:])  # 去掉 'data: ' 前缀
                                 if content['choices'][0]['delta'].get('content'):
                                     chunk = content['choices'][0]['delta']['content']
                                     print(chunk, end='', flush=True)
+                                    if '`' in chunk:
+                                        p_mode += chunk.count('`')
+                                    elif p_mode == 4:
+                                        program += chunk
+                                    elif chunk ==  "python":
+                                        p_mode += 1
+                                        gs = 'py'
+                                    elif chunk == "bash":
+                                        p_mode += 1
+                                        gs = 'bat'
+                                    elif chunk == "html":
+                                        p_mode += 1
+                                        gs = 'html'
+                                    else:
+                                        p_mode = False
                                     file.write(chunk)
                                     file.flush()
                             except json.JSONDecodeError:
@@ -148,6 +193,9 @@ def main(head_question):
                 print(f"\n{'-'*30}\n")
                 file.write(f"\n{'=-'*15}")
                 file.flush()
+                #保存程序
+                if program:
+                    create_unique_py_file(program[:-3], gs)
 
             except requests.exceptions.ConnectionError:
                 print(f"\n{chr(0x1f4f6)}  网络好像开小差了\n")
