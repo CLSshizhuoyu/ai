@@ -16,7 +16,7 @@
 > 1. Unfortunately, when I dropped in, Doctor Li ___ for Beijing to join in the fight again SARS, so we only had time for a few words.
 > A. just left         B. has just left      C. is just leaving       D. was just leaving
 > 
-> 2．He hasn't come yet．What do you consider ___ to him？ 
+> 2. He hasn't come yet. What do you consider ___ to him？ 
 > A．happens       B．has happened       C．happening         D．to happen
 > 
 > 3. ___  is known to us all is that China has launched Shenzhou V spaceship successfully.
