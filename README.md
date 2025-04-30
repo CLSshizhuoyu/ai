@@ -4,15 +4,14 @@
 
 Utalk 有聊ai程序-version 1.1
 
+---
+
 ## 如何下载？HOW TO DOWNLOAD IT?
 
-### **方法 1：使用快捷键（需先启用 GitHub 快捷键支持）**
-1. **进入仓库主页**（确保你正在浏览仓库的根目录）。
-2. 按下快捷键：
-   - **Windows/Linux**：<kbd>Shift</kbd> + <kbd>S</kbd>  
-   - **Mac**：<kbd>Shift</kbd> + <kbd>S</kbd>  
+### **方法 1：使用快捷键**
+按下快捷键：
+   - **Windows/Linux/Mac**：<kbd>Shift</kbd> + <kbd>S</kbd> 
    （这是 GitHub 的默认快捷键，会直接触发下载 ZIP 的按钮）。
-3. 浏览器会自动开始下载 `仓库名-main.zip`（或 `仓库名-master.zip`，取决于默认分支名称）。
 
 > ⚠️ **注意**：  
 > - 如果快捷键无效，可能是未启用 GitHub 快捷键功能。先按 <kbd>?</kbd>（问号键）打开快捷键帮助面板，确认快捷键是否激活。  
