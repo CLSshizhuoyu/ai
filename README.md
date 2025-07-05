@@ -8,7 +8,7 @@ Utalk 有聊ai程序-version 1.1
 
 ## 如何下载？HOW TO DOWNLOAD IT?
 
-[点这里下载]((https://github.com/CLSshizhuoyu/ai/archive/refs/heads/main.zip))
+[点这里下载](https://github.com/CLSshizhuoyu/ai/archive/refs/heads/main.zip)
 
 ### **方法 1：使用快捷键**
 按下快捷键：
