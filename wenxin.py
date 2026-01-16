@@ -1,13 +1,13 @@
 import requests
 import json
-
+from api_key_manager import get_api_key
 
 def main(head_question):
     if head_question:
         en = head_question
     else:
         en = input("请输入内容：")
-    url = "https://agentapi.baidu.com/assistant/getAnswer?appId=848ND8p4mQZBogrzhFBYM5iBfLCmi8Cu&secretKey=0VIsWDKyymovYhARy0pvY5stI5G8a8Q9"
+    url = f"https://agentapi.baidu.com/assistant/getAnswer?appId=848ND8p4mQZBogrzhFBYM5iBfLCmi8Cu&secretKey={get_api_key(name='wenxin')}"
     headers = {
         "Content-Type": "application/json"
     }
