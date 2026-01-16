@@ -1,13 +1,8 @@
-import os
 import json
 import time
 import requests
 from datetime import datetime
-import mdReader
-
-head_question = ""
-#前置问题预设，如果问题含特殊字符或无法键入，写入此变量
-#变量若有问题预设将只会运行一遍
+from api_key_manager import get_api_key
 
 class other():
     def Help():
@@ -53,12 +48,11 @@ def save_to_file(file, content, is_question=False):
     else:
         file.write(content)
 
-
 def main(head_question):
     # 配置
     url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
     headers = {
-        "Authorization": "1d15bd7c402c456980138df6f289a7df.I9zNkevSMUxnOfK7",
+        "Authorization": get_api_key(name="GLM"),
         "Content-Type": "application/json"
     }
 
@@ -119,6 +113,8 @@ def main(head_question):
                 "top_p" : 0.7,
                 "temperature" : 0.95,
                 "max_tokens" : 1024,
+                "tools" : [{"type": "web_search",
+                            "web_search": {"search_result": True}}],
                 "stream" : True
             }
 
@@ -127,7 +123,7 @@ def main(head_question):
                 response = requests.post(
                     url, json=data, headers=headers, stream=True)
                 response.raise_for_status()  # 检查响应状态
-                md = ""
+
                 # 处理流式响应
                 for line in response.iter_lines():
                     if line:
@@ -135,6 +131,7 @@ def main(head_question):
                         if line.startswith('data: '):
                             if line == 'data: [DONE]':
                                 continue
+
                             try:
                                 content = json.loads(
                                     line[6:])  # 去掉 'data: ' 前缀
@@ -143,7 +140,6 @@ def main(head_question):
                                     print(chunk, end='', flush=True)
                                     file.write(chunk)
                                     file.flush()
-                                    md += chunk
                             except json.JSONDecodeError:
                                 continue
 
@@ -161,13 +157,4 @@ def main(head_question):
                 file.write(error_msg)
                 file.flush()
             if head_question:
-                import sys
-                # 获取程序所在目录
-                script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
-                # 构建完整的文件路径
-                file_path = os.path.join(script_dir, "对话.md")
-                # 写入文件
-                with open(file_path, 'w', encoding='utf-8') as file:
-                    file.write(md)
-                mdReader.main(file_path)
                 break
