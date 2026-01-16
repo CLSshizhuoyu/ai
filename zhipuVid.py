@@ -1,6 +1,8 @@
 import requests
 import json
 import time
+from api_key_manager import get_api_key
+
 def main(head_question, mode, pic=""):
     if head_question:
         en = head_question
@@ -10,7 +12,7 @@ def main(head_question, mode, pic=""):
 
     url = "https://open.bigmodel.cn/api/paas/v4/videos/generations"
     headers = {
-        "Authorization": "6fa8f15bd00f4cccb9b1b0fd40476de4.0QiDr1JSiSfXMEpA",
+        "Authorization": get_api_key(name="Vid"),
         "Content-Type": "application/json"
     }
     if pic:
@@ -39,7 +41,7 @@ def main(head_question, mode, pic=""):
 
     url = f"https://open.bigmodel.cn/api/paas/v4/async-result/{ID}"
     headers = {
-        "Authorization": "6fa8f15bd00f4cccb9b1b0fd40476de4.0QiDr1JSiSfXMEpA",
+        "Authorization": get_api_key(name="Vid"),
         "Content-Type": "application/json"
     }
 
